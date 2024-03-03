@@ -1,0 +1,50 @@
+---
+title: "fill()"
+author: "Paige Magoto"
+date: "2024-02-28"
+output: html_document
+---
+ > sources:
+  > https://www.rdocumentation.org/packages/tidyr/versions/0.8.3/topics/fill
+   > https://tidyr.tidyverse.org/reference/fill.html
+    >https://www.digitalocean.com/community/tutorials/fill-missing-values-in-tidyr-r 
+    
+```{r}
+library(tidyverse)
+```
+First: try this: 
+```{r}
+?fill()
+```
+Accoridng to teh Help Window, the fill function has 3 parts. 
+  Fill(data, ..., .direction = c("down", "up", "downup", "updown"))
+    data = the data frame you are changing.
+  ... = the column you are affecting.
+    direction = the direction in which things are to be filled, down is the default direction. 
+      down = default, from top to bottom 
+      up = from bottom to top 
+      downup = first down, then up (goes all the way down the column, if there are still missing values (aka n/a values) it will proceed to fill in the up direction)
+      updown = first up, then down (vice verse from the downup direction)
+  !!#Something to note about the fill function: This is apart of the tidyr package of the tidyverse, so it can be used with "%>%" to explore data, and in order to use the downup and updown directions, you have to group the data using the group_by() fucntion, whcih will be in an exmaple below. 
+
+Load CSV:
+```{r}
+grades <- read.csv("https://raw.githubusercontent.com/pmagoto/8510-FunctionReviews/main/grades.csv")
+group.grades <- read.csv("https://raw.githubusercontent.com/pmagoto/8510-FunctionReviews/main/group.grades.csv")
+```
+As you can see, in this data, teh years are not fully filled out. I have the grades for students split between 2023 and 2024, but did not want to reqrite 2023 over and over next to fall, and the same with 2024 next to spring. 
+  The fill() fucntion allows you to mass edit your CSV in order to fill in observations en mass. 
+
+
+This codeblock below is using the default direction of down within the fill function. 
+```{r}
+grades.fixed <- grades %>% fill(year)
+```
+Above, the year column was filled from top to bottom, and when the year changed on the first fall the est were filled with 2023 instead of 2024. 
+
+Next code block will be an exmaple using the down up direction using the group grades csv we loaded. 
+```{r}
+group.grades.fixed <- group.grades %>% group_by(group) %>% fill(grade, .direction = "downup")
+```
+Notice how the grade was changed per the group identifyer, because you grouped the data by group. Kind of like summarise, they count everything in that group, the fill fucntion is adding the grade of the group for each memeber, so the Beatles all got a 99, despite the original csv John Lennon being the only one whose grade was originally recorded. 
+
