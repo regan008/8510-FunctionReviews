@@ -1,0 +1,7 @@
+---
+title: "dplyr::count() function"
+author: "Megha Khanna"
+date: "04/03/2024"
+---
+
+# The dplyr::count() function in R is part of the dplyr package, which is a powerful and popular tool for data manipulation. The count() function is used to count the number of occurrences of each unique value in a given column (or columns) of a data frame. Essentially, it's a convenient and concise way to perform group-by operations followed by a count of records within each group.
