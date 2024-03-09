@@ -1,0 +1,33 @@
+---
+title: "rbind.function.review"
+author: "Candy Boatwright"
+format: html
+editor: visual
+---
+
+## rbind()
+
+In programmer speak: the rbind() function concatenates data frames or matrices by rows; it stands for row binds and shows that it appends rows of one object to another (footnote: https://www.geeksforgeeks.org/combine-vectors-matrix-or-data-frames-by-rows-in-r-language-rbind-function/)
+
+```{r}
+?rbind()
+```
+
+In simpler terms:
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
