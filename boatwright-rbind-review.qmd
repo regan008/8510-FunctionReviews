@@ -1,0 +1,99 @@
+---
+title: "rbind.function.review"
+author: "Candy Boatwright"
+format: html
+---
+
+rbind()
+
+In programmer speak: the rbind() function concatenates data frames or matrices by rows; it stands for row binds and shows that it appends rows of one object to another (Source: https://www.geeksforgeeks.org/combine-vectors-matrix-or-data-frames-by-rows-in-r-language-rbind-function/)
+
+Looking at the help documentation for rbind() also gives us an idea about its uses.
+
+```{r}
+?rbind()
+```
+
+Interestingly, it shows us that rbind() has a cousin, cbind(), that is used to combine columns in datasets, vectors or matrices. Also, it tells us that if we are using rbind() to combine matrix arguments or datasets that they must have the same number of columns. If we are combining vectors of different column lengths the result will be a combined vector of the longest number of columns of the original vectors. If we are combining a matrix and a vector the matrix will determine the number of columns in the result. More on this later.
+
+In simpler terms: rbind() joins multiple rows of datasets, vectors or matrices into one batch (Source: https://www.digitalocean.com/community/tutorials/rbind-function-r)
+
+Examples
+
+First, let's create a simple two datasets and combine them:
+
+```{r}
+Team_Name <- c("UNC", "Duke", "Virginia", "Pitt")
+Conference_Wins <- c(17, 15, 12, 11)
+Conference_Losses <- c(3, 5, 7, 8)
+ACC_Top_Four <- data.frame(Team_Name, Conference_Wins, Conference_Losses)
+ACC_Top_Four
+
+Team_Name <- c("Clemson", "Syracuse", "Wake Forest", "VT")
+Conference_Wins <- c(11, 11, 11, 10)
+Conference_Losses <- c(9, 9, 9, 10)
+ACC_Next_Four <- data.frame(Team_Name, Conference_Wins, Conference_Losses)
+ACC_Next_Four
+
+ACC_Top_Eight <- rbind(ACC_Top_Four, ACC_Next_Four)
+ACC_Top_Eight
+```
+
+But what if we needed to combine datasets that do not contain exactly the same information?
+
+```{r}
+Team_Name <- c("UNC", "Duke", "Virginia", "Pitt")
+Conference_Wins <- c(17, 15, 12, 11)
+Conference_Losses <- c(3, 5, 7, 8)
+Rank <- c(1:4)
+ACC_Top_Four_Ranked <- data.frame(Team_Name, Conference_Wins, Conference_Losses, Rank)
+ACC_Top_Four_Ranked
+
+Team_Name <- c("Clemson", "Syracuse", "Wake Forest", "VT")
+Conference_Wins <- c(11, 11, 11, 10)
+Conference_Losses <- c(9, 9, 9, 10)
+ACC_Next_Four <- data.frame(Team_Name, Conference_Wins, Conference_Losses)
+ACC_Next_Four
+
+#rbind(ACC_Top_Four_Ranking, ACC_Next_Four)
+
+```
+
+This creates the following error:
+
+Error in rbind(deparse.level, ...) : numbers of columns of arguments do not match
+
+dplyr::bind_rows()
+
+```{r}
+library(dplyr)
+
+ACC_Top_Eight_Ranked <- bind_rows(ACC_Top_Four_Ranked, ACC_Next_Four)
+ACC_Top_Eight_Ranked
+```
+
+bind_rows() combines both datasets and fills the rows in the ACC_Next_Four dataset without the Rankings column with NA.
+
+Back to rbind(): it's arguments and other uses
+
+If we go back to the help documentation there are some specific arguments that we can specify when using rbind() for a dataset
+
+rbind(..., deparse.level = 1, make.row.names = TRUE, stringsAsFactors = FALSE, factor.exclude = TRUE)
+
+By using rbind.data.frame and specifying the above arguments you can create a dataframe and have R make row names, convert character strings to vectors/factors, and specify whether to include NA values. Most of the documentation I saw did not recommend using this method in dataframe creation, but it may be a value to play around with.
+
+In the example below the authors used the rbind() method to generate "cheap row names" (Source:https://stat.ethz.ch/R-manual/R-devel/library/base/html/cbind.html)
+
+```{r}
+b0 <- gl(3,4, labels=letters[1:3])
+bf <- setNames(b0, paste0("o", seq_along(b0)))
+df  <- data.frame(a = 1, B = b0, f = gl(4,3))
+df. <- data.frame(a = 1, B = bf, f = gl(4,3))
+new <- data.frame(a = 8, B ="B", f = "1")
+(df1  <- rbind(df , new))
+(df.1 <- rbind(df., new))
+stopifnot(identical(df1, rbind(df,  new, make.row.names=FALSE)),
+          identical(df1, rbind(df., new, make.row.names=FALSE)))
+```
+
+The row names in the datasets created using rbind() change when the rows do not follow the same pattern. This could potentially be used in data varification or if you are joining multiple dataset but wish to keep their original identity in some way.
