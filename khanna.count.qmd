@@ -4,4 +4,73 @@ author: "Megha Khanna"
 date: "04/03/2024"
 ---
 
-# The dplyr::count() function in R is part of the dplyr package, which is a powerful and popular tool for data manipulation. The count() function is used to count the number of occurrences of each unique value in a given column (or columns) of a data frame. Essentially, it's a convenient and concise way to perform group-by operations followed by a count of records within each group.
+# The dplyr::count() function in R is used for counting the number of occurrences of unique values within a column of a data frame or tibble. Essentially, it simplifies the process of summarizing data by providing a quick way to see how many times each unique value appears in the dataset. This function is part of the dplyr package, which is designed for data manipulation and transformation in a straightforward and intuitive manner.
+
+In simple terms, dplyr::count() helps quickly answer questions like "How many?"
+
+Example 1
+```{r}
+BL_english_colonies <- read_csv("~/Downloads/BL-english-colonies.csv")
+library(dplyr)
+result <- BL_english_colonies%>% 
+  dplyr::count(Type.of.name)
+print(result)
+```
+Example 2
+```{r}
+library(DigitalMethodsData)
+data(gayguides)
+library(dplyr)
+gayguides.count <- gayguides%>%
+  dplyr::count(type)
+print(gayguides.count)
+
+```
+
+Example 3: Including Missing Values- By default, count() excludes NA (missing) values. If you want to include them in your count, you can use the na.rm argumen
+
+```{r}
+library(DigitalMethodsData)
+data(gayguides)
+library(dplyr)
+gayguides.second.count <- gayguides%>%
+  dplyr::count(streetaddress, na.rm = FALSE)
+print(gayguides.second.count)
+```
+
+Example 4: Counting with Grouping- If the dataset contains multiple variables and you want to count occurrences of combinations of these variables, you can specify multiple columns in count(). 
+
+```{r}
+library(DigitalMethodsData)
+data(gayguides)
+library(dplyr)
+gayguides.third.count <- gayguides%>%
+  dplyr::count(title, type)
+print(gayguides.third.count)
+```
+
+Example 5: Filtering Before Counting
+
+```{r}
+library(DigitalMethodsData)
+data(gayguides)
+library(dplyr)
+gayguides.fourth.count <- gayguides%>% 
+dplyr::filter(title == "'B.A.' Beach") %>%
+  dplyr::count(title)
+print(gayguides.fourth.count)
+```
+
+(or)
+
+```{r}
+library(DigitalMethodsData)
+data(gayguides)
+library(dplyr)
+gayguides.fourth.count <- gayguides%>% 
+dplyr::filter(type == "Cruising Areas" ) %>%
+  dplyr::count(type)
+print(gayguides.fourth.count)
+```
+
+
