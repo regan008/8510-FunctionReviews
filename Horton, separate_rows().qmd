@@ -1,0 +1,57 @@
+---
+title: "Horton, separate_rows().qmd"
+date: 3/27/24
+---
+
+Hi! Today, we'll be learning about a super easy and super practical function – separate_rows().
+
+As I'm sure you can gather from the name, separate_rows() separates rows! This is not to be confused with its sibling - separate_columns() - which you are far more likely to use. However, this function just might save you lots of time some day.
+
+```{r}
+library(readr)
+library(dplyr)
+library(magrittr)
+library(tidyr)
+```
+
+```{r}
+?separate_rows()
+```
+
+This function is contained in the tidyr package. This does not come as a surprise because separate_rows() is most often used to tidy your dataset. If a row contains multiple values, it is in violation of one of the foundational tidy data rules – that each cell should contain a single value. Separate_rows() will take the contents of a single row and convert it into multiple.
+
+```{r}
+sample <- read_csv("Sample_separate_rows() - Sheet1.csv")
+```
+
+```{r}
+#separate_rows(data, column, where to split it)
+separate_rows(sample, group, sep = ",")
+```
+
+```{r}
+sample_2 <- read_csv("Sample_2_separate_rows - Sheet1.csv")
+```
+
+```{r}
+separate_rows(sample_2, years_in_office, sep = "-")
+```
+
+Can you identify the problem here?
+
+This is a prime example of the computer doing exactly what you ask it to and nothing more. For 2003-2009, the function spit out 2003 and 2009. This is because we told the computer to split the inputs whenever it sees the - symbol. We would read this as 2003 TO 2009, encompassing 2004, 2005, 2006, 2007, and 2008 in addition to 2003 and 2009, but we did not tell the function to read it this way.
+
+```{r}
+
+```
+
+Finally, if there are multiple rows that you need to modify, you can do it all at once using the separate_longer_delim() function, which falls under separate_rows()'s umbrella.
+
+```{r}
+sample_3 <- read_csv("Sample_3_separate_rows() - Sheet1.csv")
+```
+
+```{r}
+sample_3 %>% 
+  separate_longer_delim(c(class_1_groups, class_2_groups), delim = ",")
+```
