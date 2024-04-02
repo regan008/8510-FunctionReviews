@@ -1,0 +1,90 @@
+---
+title: "welborn.fct_relevel().qmd"
+author: "Cynthia Welborn"
+format: html
+editor: visual
+---
+
+## forcats::fct_relevel()
+
+This function is part of the forcats package. This package is part of Hadley Wickham's Tidyverse. To use forcats, first install and then load the Tidyverse package.
+
+```{r}
+library(tidyverse)
+```
+
+## What does forcats() do?
+
+This package allows you to reorder factor levels and provides tools for modifying factor levels. The tools in the forcats package allows users to change factor levels in a variety of ways (manually, by frequency, by another variable, etc.). The forcats package works well with other Tidyverse tools, including dplyr and ggplot2 in order to reorganize data for visualization purposes.
+
+## What is the syntax for fct_relevel()?
+
+The syntax for this function is: **fct_relevel(f,c("b", "c", "a"))**
+
+## What does the documentation tell us?
+
+```{r}
+?fct_relevel()
+```
+
+## What are some examples of fct_relevel() in action?
+
+```{r}
+view(gss_cat)
+library(tidyverse)
+gss_cat %>%
+  select(race) %>%
+  table()
+```
+
+```{r}
+gss_cat %>% 
+  mutate(race = fct_drop(race)) %>%
+  select(race) %>%
+  table()
+```
+
+```{r}
+gss_cat %>%
+  mutate(race = fct_drop(race)) %>%
+  mutate(race = fct_relevel(race,
+                            c("White", "Black", "Other"))) %>%
+  select(race) %>%
+  table()
+```
+
+```{r}
+gss_cat %>%
+  select(marital) %>%
+  table()
+```
+
+```{r}
+gss_cat %>%
+  mutate(marital = fct_relevel(marital,
+      c("Never married", "Married", "Separated", "Divorced", "Widowed", "No answer"))) %>%
+  select(marital) %>%
+  table()
+```
+
+```{r}
+library(DigitalMethodsData)
+library(dplyr)
+library(magrittr)
+data("gayguides")
+
+gg.by.loc <- gayguides %>% filter(type == "Cruising Areas" | type == "Hotel" | type == "Restaurant" | type == "Bar" | type == "Club") %>% filter(Year == 1965 | 1980) %>% group_by(type, Year) %>% summarize(count = n())
+
+test <- gg.by.loc %>%
+  select(type) %>%
+  table()
+```
+
+```{r}
+gg.by.loc %>%
+  mutate(type = fct_relevel(type,
+          c("Hotel", "Restaurant", "Cruising Areas"))) %>%
+  select(type) %>%
+  table()
+#this one throws an error
+```
