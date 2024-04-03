@@ -12,6 +12,7 @@ Example 1
 ```{r}
 library(readr)
 BL_english_colonies <- read_csv("BL-english-colonies.csv")
+View(BL_english_colonies)
 library(dplyr)
 result <- BL_english_colonies%>% 
   dplyr::count(Type.of.name)
@@ -84,4 +85,5 @@ dplyr::count(type, na.rm = FALSE)
 print(gayguides.fifth.count)
 ```
 
+See, counting isn't that difficult!!!!!
 
