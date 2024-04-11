@@ -10,7 +10,9 @@ In simple terms, dplyr::count() helps quickly answer questions like "How many?"
 
 Example 1
 ```{r}
-BL_english_colonies <- read_csv("~/Downloads/BL-english-colonies.csv")
+library(readr)
+BL_english_colonies <- read_csv("BL-english-colonies.csv")
+View(BL_english_colonies)
 library(dplyr)
 result <- BL_english_colonies%>% 
   dplyr::count(Type.of.name)
@@ -73,4 +75,15 @@ dplyr::filter(type == "Cruising Areas" ) %>%
 print(gayguides.fourth.count)
 ```
 
+```{r}
+library(DigitalMethodsData)
+data(gayguides)
+library(dplyr)
+gayguides.fifth.count <- gayguides%>% 
+dplyr::filter(type == "Bars/Clubs" ) %>%
+dplyr::count(type, na.rm = FALSE)
+print(gayguides.fifth.count)
+```
+
+See, counting isn't that difficult!!!!!
 
