@@ -10,11 +10,10 @@ Name: "David Askew"
 
 Example a.) For the first example, lets say we have a tibble called vegetables with columns "type," "price," and "size." Let's also say we wanted to find all the possible combinations for the vectors "type" and "price."
 
-In order to do this, we must create a new data set where expansion of all the combinations for the vegetable type and price can be observed. Now that we understand the purpose of crossing, let's do this step by step. First, you must load library(dplyr). Second, you must identify the tibble which represents vegetables in this example. Third, you must define the two vectors used ("type" and "price"). Finally, we must implement the crossing() function which will take the two vectors as arguments and return the data frame with all possible combinations of elements in those vectors. When running the code, it should appropriately return the data frame. 
+In order to do this, we must create a new data set where expansion of all the combinations for the vegetable type and price can be observed. Now that we understand the purpose of crossing, let's do this step by step. First, you must load library(tidyverse). Second, you must identify the tibble which represents vegetables in this example. Third, you must define the two vectors used ("type" and "price"). Finally, we must implement the crossing() function which will take the two vectors as arguments and return the data frame with all possible combinations of elements in those vectors. When running the code, it should appropriately return the data frame. 
 
 ```{r}
-library(dplyr)
-vegetables <- tibble
+library(tidyverse)
 type <- c("carrot", "potato", "lettuce")
 price <- c("4.00", "1.00", "0.50")
 result <- crossing(type, price)
@@ -28,7 +27,7 @@ Example b.) Let's say that we conducted a hypothetical science experiment which 
 To do this, we must use "Temperature" and "Pressure" to represent the vector of "design." For the column defined as "Temperature", we must list the temperature and use "High" and "Low" to represent its range. In the column defined as "Pressure", we can use "High", "Medium", and "Low" to represent the range for that column. Upon doing this, we will be able to generate a 6 x 2 tibble which demonstrates the data. Even though there is more than one element in a single vector regarding columns, R will still generate all the combinations and return the data frame.
 
 ```{r}
-library(dplyr)
+library(tidyverse)
 Temperature <- c("High", "Low")
 Pressure <- c("High", "Medium", "Low")
 design <- crossing(Temperature, Pressure)
