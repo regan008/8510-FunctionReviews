@@ -1,0 +1,65 @@
+Title: "dplyr::crossing() Function Review"
+Date: "4/17/2024"
+Name: "David Askew"
+
+1. The function that will be covered in this presentation is the dplyr::crossing() function. The purpose of this function is to generate more than one variable in a single data set. The first step necessary for understanding this function is by learning crossing(). The crossing() part of the function is important because it allows R to manipulate a data frame and expands to include all possible combinations of whatever columns the user chooses in the data.
+
+2. Scenarios where this function could be useful include expansion of data, filling in missing values to identify gaps in data, generating combinations of missing variables, and testing scenarios where those combinations could be used. Furthermore, the function is similar to expand_grid() but differs by which it inputs vectors rather than in a data frame. The relevant tasks this function could be used for includes creating a new data frame which involves multiple columns that differ from each other and finding all combinations of that column. For this, you would need to use the crossing function. When discussing scenarios, you could use the function to generate elements like types of vegetables from a grocery list and prices for each one, find differences in the level of temperature and pressure from a science experiment that involves design, and using a table to show the total combinations between the number of months, seasons, and weather patterns in a year.
+
+3. Listed below are a few examples where the dplyr::crossing() function can be used as previously discussed.
+
+Example a.) For the first example, lets say we have a tibble called vegetables with columns "type," "price," and "size." Let's also say we wanted to find all the possible combinations for the vectors "type" and "price."
+
+In order to do this, we must create a new data set where expansion of all the combinations for the vegetable type and price can be observed. Now that we understand the purpose of crossing, let's do this step by step. First, you must load library(tidyverse). Second, you must identify the tibble which represents vegetables in this example. Third, you must define the two vectors used ("type" and "price"). Finally, we must implement the crossing() function which will take the two vectors as arguments and return the data frame with all possible combinations of elements in those vectors. When running the code, it should appropriately return the data frame. 
+
+```{r}
+library(tidyverse)
+type <- c("carrot", "potato", "lettuce")
+price <- c("4.00", "1.00", "0.50")
+result <- crossing(type, price)
+print(result)
+```
+
+What we just did was use dplyr::crossing() to find all possible combinations for the type and price of the tibble representing vegetables on a grocery list in a data set. However, in a more professional setting, we can also use this function to look for combinations of factors and levels in the design of an experiment which each have different levels involving temperature and pressure. The design of the experiment will be the single vector which gets represented. 
+
+Example b.) Let's say that we conducted a hypothetical science experiment which involves different levels of temperature and pressure. We can use crossing() to generate the total combinations of high and low climate regarding temperature and levels in terms of high, medium, and low pressure in this experiment. 
+
+To do this, we must use "Temperature" and "Pressure" to represent the vector of "design." For the column defined as "Temperature", we must list the temperature and use "High" and "Low" to represent its range. In the column defined as "Pressure", we can use "High", "Medium", and "Low" to represent the range for that column. Upon doing this, we will be able to generate a 6 x 2 tibble which demonstrates the data. Even though there is more than one element in a single vector regarding columns, R will still generate all the combinations and return the data frame.
+
+```{r}
+library(tidyverse)
+Temperature <- c("High", "Low")
+Pressure <- c("High", "Medium", "Low")
+design <- crossing(Temperature, Pressure)
+print(design)
+```
+
+What we just did here was generate a tibble which showed all the possible combinations involving a single vector of "design" where "Temperature" and "Pressure" represent two separate columns. Additionally, the different levels of both "Pressure" and "Temperature" are represented in a single table as it was with the previous example. The difference between this and the previous example however is that there is an unequal amount of values in terms of the ""Temperature" and "Pressure" column where as for the previous example, they are equal. 
+
+Example c.) For the final example of the crossing() function, we will use it with three vectors and pass each of them as a separate argument to maximize its use. Furthermore, we must generate the combination of the total amount of months in a year, seasons, and weather patterns. This includes the months of January to December and seasons of Spring to Winter. To do this, we must first load library(dplyr). Once that is done, we must define our vectors as "Months", "Seasons", and "Weather". After this, we need to use crossing to generate all combinations with all_combinations and then list the Month which equals months and Seasons which must equal seasons. Now once all this is completed, then we can print the result.
+
+```{r}
+library(dplyr)
+Months <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+Seasons <- c("Spring", "Summer", "Autumn", "Winter")
+Weather <-c("Snow", "Cloudy", "Rain", "Partly Cloudy", "Sunny", "Sunny", "Sunny", "Sunny", "Cloudy", "Cloudy", "Cloudy", "Snow")
+all_combinations <- crossing(Month = Months, Season = Seasons, Weather = Weather)
+print(all_combinations)
+```
+
+And with that, we have successfully created a data set with three vectors and utilized the crossing function to return our data on months and seasons of the year and weather. The reason why the data is out of order regarding each month not being logically associated with the correct season and type of weather is because crossing() does not take those relationships into account. Therefore, if we wanted to show each month, season, and year being correctly associated with the weather, we would need to create a data frame instead of using crossing() to simply demonstrate combinations.
+
+Thus, it would look like this instead:
+
+```{r}
+library(dplyr)
+Months <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+Seasons <- c("Winter", "Winter", "Spring", "Spring", "Spring", "Summer", "Summer", "Summer", "Autumn", "Autumn", "Autumn", "Winter")
+Weather <-c("Snow", "Cloudy", "Rain", "Partly Cloudy", "Sunny", "Sunny", "Sunny", "Sunny", "Cloudy", "Cloudy", "Cloudy", "Snow")
+data <- data.frame(Month = Months, Season = Seasons, Weather = Weather)
+print(data)
+```
+
+After demonstrating three examples and explaining the purpose of crossing, understanding the function can be very useful when it comes to representing combinations of data in a single or multiple vectored data set. It is also efficient and saves time with generating given vectors quickly since producing a data frame manually for each vector would be extremely time consuming. However, all of this depends on the nature of the data you are using and the function cannot be used in every case as observed with Example 3. Nevertheless, its effectiveness and convenience cannot be understated.
+
+
