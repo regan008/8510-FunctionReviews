@@ -38,7 +38,7 @@ We will begin with how floor_date() works by rounding down by the year.
 ```{r}
 floor_date(tidystormsdate, "year") #Regarding the output, UTC stands for Universal Time Coordinated.
 ```
-As we can see, it is rounding down by each year, beginning with January 1st and omitting the time. It also produces a large number of entries, so we will only be looking at the head and tail results of the following examples from this point on. 
+As we can see, it is rounding down by each year, beginning with January 1st and omitting the time. It also produces a large number of entries, so we will only be looking at the head and tail results for the following examples. 
 
 Perhaps we do not want to look at each individual year, but rather the decade. We can do this by setting it to round down by the (x)year:
 ```{r}
@@ -54,6 +54,7 @@ What happens if we use ceiling date?
 ```{r}
 head(ceiling_date(tidystormsdate, "10 years"))
 ```
+
 ```{r}
 tail(ceiling_date(tidystormsdate, "10 years"))
 ```
@@ -69,6 +70,7 @@ We can, however, use floor_date to round down to a specific hour:
 ```{r}
 head(floor_date(tidystormsdate, "12 hours"))
 ```
+
 ```{r}
 head(floor_date(tidystormsdate, "6 hours"))
 ```
@@ -77,6 +79,7 @@ When rounding down to 12 hours, we are only getting 12:00 and 00:00. If we drop 
 ```{r}
 head(ceiling_date(tidystormsdate, "12 hours"))
 ```
+
 ```{r}
 head(ceiling_date(tidystormsdate, "6 hours"))
 ```
